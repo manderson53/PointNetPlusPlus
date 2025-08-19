@@ -1,0 +1,16 @@
+activate venv by using cmd not powershell and run these commands:
+
+cd %USERPROFILE%\Desktop\PointNet++
+cd venv\Scripts
+activate.bat
+
+now you should see a (venv) to indicate you are in the virtual environment
+
+cd ../.. to go to root
+cd ../Scripts to go to your python scripts
+
+	
+[] - More intense loss function differential equation?
+[] - K Fold validation - split training data into 5 times so five times thencompare and take the average
+[] - maybe look into other datasets?
+	
