@@ -213,5 +213,6 @@ Scripts/checkpoints/
 Scripts/checkpoints_kfold/
 Scripts/eval_results/
 Scripts/OLD/
+Scripts/OLDV2/
 Scripts/preprocessed_data/
 Scripts/validation_data/
