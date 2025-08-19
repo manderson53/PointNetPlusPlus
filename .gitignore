@@ -205,3 +205,13 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Custom
+Benchmark/
+
+Scripts/checkpoints/
+Scripts/checkpoints_kfold/
+Scripts/eval_results/
+Scripts/OLD/
+Scripts/preprocessed_data/
+Scripts/validation_data/
