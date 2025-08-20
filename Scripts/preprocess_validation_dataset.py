@@ -5,6 +5,7 @@ from pyntcloud import PyntCloud
 def process_ply_file(ply_path, output_dir, file_prefix, block_size=4096):
     cloud = PyntCloud.from_file(ply_path)
     points = cloud.points[["x", "y", "z"]].values
+    #points = cloud.points[["x", "y", "z", "reflectance"]].values       #turn this on and change directory if you want reflectance data as well
     labels = cloud.points["class"].values
     print("Unique labels in this file:", np.unique(labels))
 

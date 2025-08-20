@@ -86,17 +86,17 @@ def validate(model, val_loader):
     with torch.no_grad():
         for points, labels in val_loader:
             # Normalize points
-            points = points - points.mean(dim=1, keepdim=True)
-            norms = points.norm(dim=2, keepdim=True).max(dim=1, keepdim=True)[0]
+            points = points - points.mean(dim=2, keepdim=True)
+            norms = points.norm(dim=1, keepdim=True).max(dim=2, keepdim=True)[0]
             points = points / norms
             points = points.to(device)
             labels = labels.to(device)
 
             # Forward pass
-            outputs = model(points)
+            outputs, _ = model(points)
 
             # Compute individual losses
-            ce_loss = criterion(outputs.view(-1, num_classes), labels.view(-1))
+            ce_loss = criterion(outputs.reshape(-1, num_classes), labels.view(-1))
             p_loss = torch.tensor(0.0, device=device)   # placeholder
             sh_loss = torch.tensor(0.0, device=device)  # placeholder
 
@@ -157,7 +157,7 @@ def train_kfold():
         train_loader = DataLoader(train_subset, batch_size=32, shuffle=True, num_workers=4)
         val_loader = DataLoader(val_subset, batch_size=32, shuffle=False, num_workers=4)
 
-        model = get_model(num_classes=num_classes).to(device)
+        model = get_model(num_classes=num_classes, in_channel=0).to(device)
         optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
         criterion = nn.CrossEntropyLoss(weight=weights)
 
@@ -167,16 +167,16 @@ def train_kfold():
             total_points = 0
 
             for points, labels in tqdm(train_loader, desc=f"Fold {fold+1} Epoch {epoch+1}/{num_epochs}"):
-                points = points - points.mean(dim=1, keepdim=True)
-                norms = points.norm(dim=2, keepdim=True).max(dim=1, keepdim=True)[0]
+                points = points - points.mean(dim=2, keepdim=True)
+                norms = points.norm(dim=1, keepdim=True).max(dim=2, keepdim=True)[0]
                 points = points / norms
                 points = points.to(device)
                 labels = labels.to(device)
 
                 optimizer.zero_grad()
-                outputs = model(points)
+                outputs, _ = model(points)
 
-                ce_loss = criterion(outputs.view(-1, num_classes), labels.view(-1))
+                ce_loss = criterion(outputs.reshape(-1, num_classes), labels.view(-1))
                 p_loss = torch.tensor(0.0, device=device)
                 sh_loss = torch.tensor(0.0, device=device)
                 total_loss = ce_loss + p_loss + sh_loss

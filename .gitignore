@@ -215,4 +215,6 @@ Scripts/eval_results/
 Scripts/OLD/
 Scripts/OLDV2/
 Scripts/preprocessed_data/
+Scripts/preprocessed_data_reflectance
 Scripts/validation_data/
+Scripts/validation_data_reflectance/

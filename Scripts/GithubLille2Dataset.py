@@ -3,7 +3,7 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 
-class CombinedLille1ParisDataset(torch.utils.data.Dataset):
+class Lille2Dataset(torch.utils.data.Dataset):
     def __init__(self, data_dirs=None, files_lists=None):
         """
         data_dirs: List of data directories (strings), e.g., ["lille1_1_dir", "lille2_dir", "paris_dir"]
@@ -29,9 +29,12 @@ class CombinedLille1ParisDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         point_path, label_path = self.samples[idx]
-        points = np.load(point_path)   # should be shape (N,3) only
-        labels = np.load(label_path)   # shape (N,)
+        points = np.load(point_path)   # should be shape (N,3)
+        labels = np.load(label_path)   # should be shape (N,)
 
+        if points is None or labels is None:
+            print(f"Warning: None returned for index {idx}")
+        
         xyz = torch.from_numpy(points).float().permute(1, 0)  # (3, N)
         labels = torch.from_numpy(labels).long()              # (N,)
         return xyz, labels
