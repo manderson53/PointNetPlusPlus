@@ -214,7 +214,14 @@ Scripts/checkpoints_kfold/
 Scripts/eval_results/
 Scripts/OLD/
 Scripts/OLDV2/
+Scripts/OLDV3/
+Scripts/OLDV4/
+Scripts/V5TestCode/
 Scripts/preprocessed_data/
 Scripts/preprocessed_data_reflectance
 Scripts/validation_data/
 Scripts/validation_data_reflectance/
+Scripts/training_results/
+Scripts/preprocessed_training_data/
+Scripts/preprocessed_validation_data/
+Scripts/test_training_results/

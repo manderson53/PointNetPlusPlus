@@ -1,6 +1,6 @@
 import torch.nn as nn
 import torch.nn.functional as F
-from github_yanx27_utils import PointNetSetAbstraction,PointNetFeaturePropagation
+from yanx27_utils import PointNetSetAbstraction,PointNetFeaturePropagation
 
 
 class get_model(nn.Module):
@@ -20,10 +20,10 @@ class get_model(nn.Module):
         self.conv2 = nn.Conv1d(128, num_classes, 1)
 
     def forward(self, xyz):
+        l0_xyz = xyz[:,:3,:]
         # l0_points = xyz
-        # l0_xyz = xyz[:,:3,:]
 
-        l0_xyz = xyz       # coordinates
+        # l0_xyz = xyz       # coordinates
         l0_points = None   # no additional features
 
         l1_xyz, l1_points = self.sa1(l0_xyz, l0_points)
@@ -38,10 +38,10 @@ class get_model(nn.Module):
 
         x = self.drop1(F.relu(self.bn1(self.conv1(l0_points))))
         x = self.conv2(x)
-        x = F.log_softmax(x, dim=1)
+        # Michael commenting this out because crossentropyloss will handle internally
+        # x = F.log_softmax(x, dim=1)
         x = x.permute(0, 2, 1)
         return x, l4_points
-
 
 class get_loss(nn.Module):
     def __init__(self):
@@ -54,5 +54,6 @@ class get_loss(nn.Module):
 if __name__ == '__main__':
     import  torch
     model = get_model(13)
-    xyz = torch.rand(6, 9, 2048)
+    # xyz = torch.rand(6, 9, 2048)
+    xyz = torch.rand(6, 4, 2048)
     (model(xyz))
