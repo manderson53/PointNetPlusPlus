@@ -3,11 +3,12 @@ import numpy as np
 import open3d as o3d
 from tqdm import tqdm
 
+try:
+    from config_local import VALIDATION_PLY_FILES as PLY_FILES, PREPROCESS_VALIDATION_DATA_OUTPUT_DIR as OUTPUT_DIR
+except ImportError:
+    raise RuntimeError("Missing config_local.py. Please create it with PLY_FILES and OUTPUT_DIR defined.")
+
 # ----------------- Config -----------------
-PLY_FILES = [
-    r"C:\Users\RemoteCollabHoloLens\Desktop\PointNet++\Benchmark\Benchmark\training_10_classes\Lille2.ply"
-]
-OUTPUT_DIR = "preprocessed_validation_data"
 BLOCK_SIZE = 4096       # points per block
 BLOCK_LENGTH = 1.0      # meters
 

@@ -2,13 +2,13 @@ import os
 import numpy as np
 from plyfile import PlyData
 
+# Import local config (this file will be gitignored)
+try:
+    from config_local import TRAINING_PLY_FILES as PLY_FILES, PREPROCESS_TRAINING_DATA_OUTPUT_DIR as OUTPUT_DIR
+except ImportError:
+    raise RuntimeError("Missing config_local.py. Please create it with PLY_FILES and OUTPUT_DIR defined.")
+
 # --- Configuration ---
-PLY_FILES = [
-    r"C:\Users\RemoteCollabHoloLens\Desktop\PointNet++\Benchmark\Benchmark\training_10_classes\Lille2.ply",
-    r"C:\Users\RemoteCollabHoloLens\Desktop\PointNet++\Benchmark\Benchmark\training_10_classes\Lille1_2.ply",
-    r"C:\Users\RemoteCollabHoloLens\Desktop\PointNet++\Benchmark\Benchmark\training_10_classes\paris.ply"
-]
-OUTPUT_DIR = r"preprocessed_training_data"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def compute_xyz_range(ply_file):

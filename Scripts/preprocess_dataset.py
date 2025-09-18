@@ -4,13 +4,12 @@ import open3d as o3d
 from tqdm import tqdm
 from pyntcloud import PyntCloud
 
+try:
+    from config_local import TRAINING_PLY_FILES as PLY_FILES, PREPROCESS_TRAINING_DATA_OUTPUT_DIR as OUTPUT_DIR
+except ImportError:
+    raise RuntimeError("Missing config_local.py. Please create it with PLY_FILES and OUTPUT_DIR defined.")
+
 # ----------------- Config -----------------
-PLY_FILES = [
-    r"C:\Users\RemoteCollabHoloLens\Desktop\PointNet++\Benchmark\Benchmark\training_10_classes\Lille1_1.ply",
-    r"C:\Users\RemoteCollabHoloLens\Desktop\PointNet++\Benchmark\Benchmark\training_10_classes\Lille1_2.ply",
-    r"C:\Users\RemoteCollabHoloLens\Desktop\PointNet++\Benchmark\Benchmark\training_10_classes\paris.ply"
-]
-OUTPUT_DIR = "preprocessed_training_data"
 BLOCK_SIZE = 4096       # points per block
 BLOCK_LENGTH = 1.0      # meters (1x1x1 m blocks)
 OVERLAP_XY = 0.2   # 20% in X and Y

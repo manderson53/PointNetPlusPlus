@@ -217,11 +217,14 @@ Scripts/OLDV2/
 Scripts/OLDV3/
 Scripts/OLDV4/
 Scripts/V5TestCode/
-Scripts/preprocessed_data/
-Scripts/preprocessed_data_reflectance
-Scripts/validation_data/
-Scripts/validation_data_reflectance/
-Scripts/training_results/
 Scripts/preprocessed_training_data/
 Scripts/preprocessed_validation_data/
+Scripts/evaluation_results_baseline/
+Scripts/evaluation_results_physics/
+Scripts/training_results/
 Scripts/test_training_results/
+Scripts/training_results_physics/
+
+#custom files
+Scripts/config_local.py
+config_local.py
