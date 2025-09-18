@@ -208,6 +208,7 @@ __marimo__/
 
 # Custom
 Benchmark/
+Notes/
 
 Scripts/checkpoints/
 Scripts/checkpoints_kfold/
