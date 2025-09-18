@@ -13,9 +13,9 @@ from ParisLilleDataset import ParisLilleDataset
 from torch_cluster import knn_graph
 
 try:
-    from config_local import TRAINING_LABLE_WEIGHTS_PATH as label_weights_path
+    from config_local import TRAINING_LABLE_WEIGHTS_PATH as label_weights_path, TRAINING_OUTPUT_DIR, TRAINING_OUTPUT_DIR_PHYSICS
 except ImportError:
-    raise RuntimeError("Missing config_local.py. Please create it with PLY_FILES and OUTPUT_DIR defined.")
+    raise RuntimeError("Missing config_local.py. Please create it with Label Weights and OUTPUT_DIR defined.")
 
 
 
@@ -239,7 +239,10 @@ def train_kfold():
     use_physics_loss = True
     lambda_phys = 0.1
     lambda_smooth = 0.01
-    output_dir = "training_results_physics"
+    if use_physics_loss:
+        output_dir = TRAINING_OUTPUT_DIR_PHYSICS
+    else:
+        output_dir = TRAINING_OUTPUT_DIR
     os.makedirs(output_dir, exist_ok=True)
 
     label_weights = np.load(label_weights_path)

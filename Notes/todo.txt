@@ -1,7 +1,0 @@
-get model running w/ GitHub to start training again
-	preprocessed dataset to include reflectance
-	GitHub version has way more data channels than I have
-notes for next meeting Thursday
-
-3x planes one for each dataset
-use plane find z coordinate for pointl

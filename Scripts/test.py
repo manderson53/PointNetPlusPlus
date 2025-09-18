@@ -12,9 +12,9 @@ from yanx27_sem_seg import get_model
 from ParisLilleDataset import ParisLilleDataset
 
 try:
-    from config_local import TRAINING_LABLE_WEIGHTS_PATH as label_weights_path
+    from config_local import TRAINING_LABLE_WEIGHTS_PATH as label_weights_path, TEST_TRAINING_OUTPUT_DIR, TEST_TRAINING_OUTPUT_DIR_PHYSICS
 except ImportError:
-    raise RuntimeError("Missing config_local.py. Please create it with PLY_FILES and OUTPUT_DIR defined.")
+    raise RuntimeError("Missing config_local.py. Please create it with Label Weights and OUTPUT_DIR defined.")
 
 
 # --- Global Variables ---
@@ -236,7 +236,10 @@ def train_kfold():
     use_physics_loss = True
     lambda_phys = 0.1
     lambda_smooth = 0.01
-    output_dir = "test_training_results"
+    if use_physics_loss:
+        output_dir = TEST_TRAINING_OUTPUT_DIR_PHYSICS
+    else:
+        output_dir = TEST_TRAINING_OUTPUT_DIR
     os.makedirs(output_dir, exist_ok=True)
 
 

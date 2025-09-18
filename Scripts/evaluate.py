@@ -10,6 +10,11 @@ from yanx27_sem_seg import get_model
 from ParisLilleDataset import ParisLilleDataset
 from collections import defaultdict, Counter
 
+try:
+    from config_local import EVAL_OUTPUT_DIR, EVAL_OUTPUT_DIR_PHYSICS, TRAINING_OUTPUT_DIR, TRAINING_OUTPUT_DIR_PHYSICS
+except ImportError:
+    raise RuntimeError("Missing config_local.py. Please create it with Label Weights and OUTPUT_DIR defined.")
+
 # -----------------------------
 # Metric computation
 # -----------------------------
@@ -86,7 +91,8 @@ def evaluate_best_models():
     batch_size = 96
     device = "cuda" if torch.cuda.is_available() else "cpu"
     num_folds = 5
-    output_dir = "evaluation_results_physics"
+    use_physics_loss = True
+    output_dir = EVAL_OUTPUT_DIR_PHYSICS if use_physics_loss else EVAL_OUTPUT_DIR
     os.makedirs(output_dir, exist_ok=True)
 
     print("Loading validation dataset...")
@@ -107,7 +113,8 @@ def evaluate_best_models():
     for fold_idx in range(num_folds):
         fold = fold_idx + 1
         print(f"\nEvaluating fold {fold}...")
-        model_path = os.path.join("training_results_physics", f"best_model_fold{fold}.pth")
+        input_dir = TRAINING_OUTPUT_DIR_PHYSICS if use_physics_loss else TRAINING_OUTPUT_DIR
+        model_path = os.path.join(input_dir, f"best_model_fold{fold}.pth")
         model = get_model(num_classes=num_classes, in_channel=0).to(device)
         model.load_state_dict(torch.load(model_path, map_location=device))
         model.eval()
